@@ -19,6 +19,40 @@ describe('DAG', function () {
 		session.end(done);
 	})
 
+	describe('Request invalid', function() {
+		it('it should be invalid', function(done) {
+			session.setValue('#'+dagEl.HASH_INPUT, "asd")
+
+			session.getValue('#'+dagEl.HASH_INPUT, function(err, res) {
+				expect(res).toBe("asd")
+			})
+
+			session.getAttribute('#'+dagEl.HASH_INPUT, 'class', function(err, res) {
+				var each = res.split(' ')
+				expect(each).toContain('invalid')
+			})
+
+			session.call(done)
+		})
+	})
+
+	describe('Request valid', function() {
+		it('it should be valid', function(done) {
+			session.setValue('#'+dagEl.HASH_INPUT, "QmVHs3Ztzm7teVRY1zFCWZCAYRWNtRk75nYsP9yp4tXaGs")
+
+			session.getValue('#'+dagEl.HASH_INPUT, function(err, res) {
+				expect(res).toBe("QmVHs3Ztzm7teVRY1zFCWZCAYRWNtRk75nYsP9yp4tXaGs")
+			})
+
+			session.getAttribute('#'+dagEl.HASH_INPUT, 'class', function(err, res) {
+				var each = res.split(' ')
+				expect(each).toContain('valid')
+			})
+
+			session.call(done)
+		})
+	})
+
 	describe('Request object', function() {
 		it('should search', function(done) {
 			session.setValue('#'+dagEl.HASH_INPUT, "asd")
