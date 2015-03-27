@@ -2,6 +2,8 @@ var React = require('react')
 var Router = require('react-router')
 var Nav = require('../views/nav.jsx')
 var Object = require('../views/object.jsx')
+var multihash = require('multihashes')
+var base58 = require('bs58');
 
 module.exports = React.createClass({
   mixins: [ Router.State ],
@@ -20,7 +22,7 @@ module.exports = React.createClass({
     if(hash.split('/')[0].length === 0) hash = hash.slice(1)
     if(hash) this.getObject(hash)
 
-    return { object: null, hash: hash, hashInput: hash }
+    return { object: null, hash: hash, hashInput: hash, valid: false }
   },
 
   handleHashChange: function() {
@@ -61,8 +63,17 @@ module.exports = React.createClass({
   },
 
   updateHash: function(e) {
-    var hash = $(e.target).val().trim()
-    this.setState({ hashInput: hash })
+    var path = $(e.target).val().trim()
+    var hash = path.split('/')[0];
+    var isValid = true
+    try {
+      var buff = base58.decode(hash)
+      var buf  = new Buffer(buff)
+      var mh = multihash.decode(buf)
+    } catch(e) {
+      isValid = false
+    }
+    this.setState({ hashInput: path, valid: isValid })
   },
 
   update: function(e) {
@@ -79,6 +90,11 @@ module.exports = React.createClass({
       gateway: this.props.gateway
     }) : null
 
+	var fieldValid = "";
+
+	if(this.state.hashInput.length > 0) {
+		fieldValid = this.state.valid ? "valid" : "invalid"
+	}
     return (
       <div className="row">
         <div className="col-sm-10 col-sm-offset-1 webui-dag">
@@ -86,7 +102,7 @@ module.exports = React.createClass({
             <h4>Enter hash or path</h4>
             <div className="path row">
               <div className="col-xs-11">
-                <input type="text" className="form-control input-lg" onChange={this.updateHash} onKeyPress={this.update} value={this.state.hashInput} placeholder="Enter hash or path: /ipfs/QmBpath..."/>
+                <input type="text" className={"form-control input-lg " + fieldValid } onChange={this.updateHash} onKeyPress={this.update} value={this.state.hashInput} placeholder="Enter hash or path: /ipfs/QmBpath..."/>
               </div>
               <button className="btn btn-primary go col-xs-1" onClick={this.update}>GO</button>
             </div>

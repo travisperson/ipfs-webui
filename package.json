@@ -4,11 +4,14 @@
   "description": "A frontend for IPFS",
   "main": "index.js",
   "dependencies": {
+    "base58-native": "^0.1.4",
+    "bs58": "^2.0.1",
+    "ipfs-api": "^1.1.0",
+    "multihashes": "^0.1.2",
+    "react": "^0.12.1",
     "react-async": "^2.0.1",
     "react-bootstrap": "^0.12.0",
-    "react-router": "^0.11.4",
-    "react": "^0.12.1",
-    "ipfs-api": "^1.1.0"
+    "react-router": "^0.11.4"
   },
   "devDependencies": {
     "browserify": "^8.1.1",
@@ -29,7 +32,9 @@
     "react-bootstrap": "^0.12.0",
     "react-tools": "^0.11.2",
     "reactify": "^0.14.0",
-    "vinyl-source-stream": "^1.0.0"
+    "vinyl-source-stream": "^1.0.0",
+    "browserify-bignum": "git+https://github.com/maraoz/browserify-bignum.git",
+    "browserify-buffertools": "git+https://github.com/maraoz/browserify-buffertools.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
