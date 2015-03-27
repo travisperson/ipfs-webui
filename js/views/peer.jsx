@@ -2,13 +2,15 @@ var React = require('react')
 var addr = require('./typography.jsx').addr
 var copier = require('./copier.jsx')
 
+var peerEl = require('../../test/helpers/peer.js').elems;
+
 module.exports = React.createClass({
   render: function() {
     return (
       <div className="webui-peer">
         <div className="box info">
           <p>
-            <strong>Peer ID: </strong> <code>{this.props.peer.ID}</code>&nbsp;
+            <strong>Peer ID: </strong> <code id={peerEl.PEER_ID}>{this.props.peer.ID}</code>&nbsp;
             <copier copyText={this.props.peer.ID}><i className="fa fa-copy" /></copier>
           </p>
           <br />
@@ -16,15 +18,15 @@ module.exports = React.createClass({
             <strong>Location: </strong> {this.props.location.formatted || 'Unknown'}
           </p>
           <p>
-            <strong>Agent Version: </strong> <code>{this.props.peer.AgentVersion || ''}</code>
+            <strong>Agent Version: </strong> <code id={peerEl.AGENT_VER}>{this.props.peer.AgentVersion || ''}</code>
           </p>
           <p>
-            <strong>Protocol Version: </strong> <code>{this.props.peer.ProtocolVersion || ''}</code>
+            <strong>Protocol Version: </strong> <code id={peerEl.PROTO_VER}>{this.props.peer.ProtocolVersion || ''}</code>
           </p>
           <br />
           <p>
             <strong>Public Key:</strong>
-            <pre className="panel textarea-panel">{this.props.peer.PublicKey || ''}</pre>
+            <pre id={peerEl.PUBLIC_KEY} className="panel textarea-panel">{this.props.peer.PublicKey || ''}</pre>
             <div className="pubkey-copy">
               <copier copyText={this.props.peer.PublicKey}>
                 <i className="fa fa-copy"></i> Copy

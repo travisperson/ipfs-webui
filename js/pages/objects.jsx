@@ -5,6 +5,8 @@ var Object = require('../views/object.jsx')
 var multihash = require('multihashes')
 var base58 = require('bs58');
 
+var objectsEl = require('../../test/helpers/dag.js').elems
+
 module.exports = React.createClass({
   mixins: [ Router.State ],
 
@@ -102,7 +104,7 @@ module.exports = React.createClass({
             <h4>Enter hash or path</h4>
             <div className="path row">
               <div className="col-xs-11">
-                <input type="text" className={"form-control input-lg " + fieldValid } onChange={this.updateHash} onKeyPress={this.update} value={this.state.hashInput} placeholder="Enter hash or path: /ipfs/QmBpath..."/>
+                <input type="text" id={objectsEl.HASH_INPUT} className={"form-control input-lg " + fieldValid } onChange={this.updateHash} onKeyPress={this.update} value={this.state.hashInput} placeholder="Enter hash or path: /ipfs/QmBpath..."/>
               </div>
               <button className="btn btn-primary go col-xs-1" onClick={this.update}>GO</button>
             </div>
